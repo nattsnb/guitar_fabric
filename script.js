@@ -43,12 +43,21 @@ class Guitar {
 class Supplier {
     constructor() {
         this.lastDeliveryDateTime = 0;
+        this.frequencyInSeconds = 20;
     }
 
     delivery() {
         let arrayLength = getRandomIntInclusive(3,6);
-        const suppliesArry = []
-        suppliesArry.length = arrayLength
+        const suppliesArray = []
+        suppliesArray.length = arrayLength
+        let iteration = 0;
+        while(iteration < arrayLength) {
+            const availableSupplies = ["neck", "strings"]
+            const randomElement = availableSupplies[Math.floor(Math.random() * availableSupplies.length)];
+            const supply = suppliesArray.splice(iteration, 1, randomElement);
+            iteration++;
+        }
+        console.log(suppliesArray)
     }
 }
 
