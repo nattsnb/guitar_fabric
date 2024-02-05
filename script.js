@@ -54,12 +54,17 @@ class Supplier {
 
 const neck = new Neck();
 
+const strings = new Strings();
+
+const body = new Body();
+
 const guitar = new Guitar(
-    neck, new Strings(), new Body()
+    neck, strings, body
 )
 
 console.log(guitar);
-guitar.tune()
+guitar.tune();
+console.log(guitar);
 console.log(guitar.isPlayable());
 
 // const someDate = new Date("2024-01-01");
