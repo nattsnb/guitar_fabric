@@ -43,21 +43,25 @@ class Guitar {
 class Supplier {
     constructor() {
         this.lastDeliveryDateTime = 0;
-        this.frequencyInSeconds = 20;
+        this.frequencyInSeconds = 2;
     }
 
     delivery() {
-        let arrayLength = getRandomIntInclusive(3,6);
-        const suppliesArray = []
-        suppliesArray.length = arrayLength
-        let iteration = 0;
-        while(iteration < arrayLength) {
-            const availableSupplies = ["neck", "strings"]
-            const randomElement = availableSupplies[Math.floor(Math.random() * availableSupplies.length)];
-            const supply = suppliesArray.splice(iteration, 1, randomElement);
-            iteration++;
-        }
-        console.log(suppliesArray)
+        setTimeout( function (){
+            let arrayLength = getRandomIntInclusive(3,6);
+            const suppliesArray = []
+            suppliesArray.length = arrayLength
+            let iteration = 0;
+            while(iteration < arrayLength) {
+                const availableSupplies = ["neck", "strings"]
+                const randomElement = availableSupplies[Math.floor(Math.random() * availableSupplies.length)];
+                const supply = suppliesArray.splice(iteration, 1, randomElement);
+                iteration++;
+            }
+            console.log(suppliesArray);
+            this.lastDeliveryDateTime = new Date();
+            console.log(this.lastDeliveryDateTime)
+        },this.frequencyInSeconds*1000);
     }
 }
 
@@ -79,13 +83,6 @@ console.log(guitar);
 console.log(guitar.isPlayable());
 console.log(supplier);
 supplier.delivery();
-
-// const someDate = new Date("2024-01-01");
-// console.log(someDate.toISOString());
-// console.log(someDate.getTime());
-//
-// // random number (from 3 to 6)
-//
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
