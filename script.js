@@ -47,8 +47,8 @@ class Supplier {
 
     delivery() {
         let arrayLength = getRandomIntInclusive(3,6);
-        const randomArry = []
-        randomArry.length = arrayLength
+        const suppliesArry = []
+        suppliesArry.length = arrayLength
     }
 }
 
@@ -62,10 +62,14 @@ const guitar = new Guitar(
     neck, strings, body
 )
 
+const supplier = new(Supplier);
+
 console.log(guitar);
 guitar.tune();
 console.log(guitar);
 console.log(guitar.isPlayable());
+console.log(supplier);
+supplier.delivery();
 
 // const someDate = new Date("2024-01-01");
 // console.log(someDate.toISOString());
@@ -73,17 +77,9 @@ console.log(guitar.isPlayable());
 //
 // // random number (from 3 to 6)
 //
-// let iteration = 0;
-// while(iteration < 20) {
-//     let randomNumber = getRandomIntInclusive(3,6);
-//     const randomArry = new Array(randomNumber)
-//     console.log(randomArry)
-//
-//     iteration++;
-// }
-//
-// function getRandomIntInclusive(min, max) {
-//     min = Math.ceil(min);
-//     max = Math.floor(max);
-//     return Math.floor(Math.random() * (max - min + 1) + min);
-// }
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
