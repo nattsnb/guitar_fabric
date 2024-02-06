@@ -41,23 +41,16 @@ class Guitar {
 }
 
 class Supplier {
-    constructor() {
+    constructor(frequencyInSeconds) {
         this.lastDeliveryDateTime = new Date().getTime();
-        this.frequencyInSeconds = 2;
+        this.frequencyInSeconds = frequencyInSeconds;
     }
 
     delivery() {
-        setTimeout( function (){
+        setInterval( function (){
             let arrayLength = getRandomIntInclusive(3,6);
             const suppliesArray = []
             suppliesArray.length = arrayLength
-            let iteration = 0;
-            while(iteration < arrayLength) {
-                const availableSupplies = ["neck", "strings"]
-                const randomElement = availableSupplies[Math.floor(Math.random() * availableSupplies.length)];
-                const supply = suppliesArray.splice(iteration, 1, randomElement);
-                iteration++;
-            }
             console.log(suppliesArray);
             let newDelivery = new Date().getTime();
             let lastDeliveryDifference = newDelivery - supplier.lastDeliveryDateTime;
@@ -66,26 +59,47 @@ class Supplier {
         },this.frequencyInSeconds*1000);
     }
 }
+class Storage {
 
-const neck = new Neck();
+}
 
-const strings = new Strings();
+class Factory {
+    constructor() {
+        this.neckSupplier = new Supplier(3);
+        this.stringsSupplier = new Supplier(4);
+        this.storage = new Storage;
+    }
 
-const body = new Body();
+    produceBody(){
+        return new Body
+    }
 
-const guitar = new Guitar(
-    neck, strings, body
-)
+    runProductionLine () {
+        setInterval({
 
-const supplier = new(Supplier);
+        }, 2000);
+    }
+}
 
-console.log(guitar);
-guitar.tune();
-console.log(guitar);
-console.log(guitar.isPlayable());
-console.log(supplier);
-supplier.delivery();
-supplier.delivery();
+// const neck = new Neck();
+//
+// const strings = new Strings();
+//
+// const body = new Body();
+//
+// const guitar = new Guitar(
+//     neck, strings, body
+// )
+//
+// const supplier = new Supplier(2);
+//
+// console.log(guitar);
+// guitar.tune();
+// console.log(guitar);
+// console.log(guitar.isPlayable());
+// console.log(supplier);
+// supplier.delivery();
+// supplier.delivery();
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
