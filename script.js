@@ -42,7 +42,7 @@ class Guitar {
 
 class Supplier {
     constructor() {
-        this.lastDeliveryDateTime = 0;
+        this.lastDeliveryDateTime = new Date().getTime();
         this.frequencyInSeconds = 2;
     }
 
@@ -59,8 +59,10 @@ class Supplier {
                 iteration++;
             }
             console.log(suppliesArray);
-            this.lastDeliveryDateTime = new Date();
-            console.log(this.lastDeliveryDateTime)
+            let newDelivery = new Date().getTime();
+            let lastDeliveryDifference = newDelivery - supplier.lastDeliveryDateTime;
+            this.lastDeliveryDateTime = newDelivery;
+            console.log("difference: " + lastDeliveryDifference);
         },this.frequencyInSeconds*1000);
     }
 }
@@ -82,6 +84,7 @@ guitar.tune();
 console.log(guitar);
 console.log(guitar.isPlayable());
 console.log(supplier);
+supplier.delivery();
 supplier.delivery();
 
 function getRandomIntInclusive(min, max) {
