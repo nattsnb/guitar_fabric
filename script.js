@@ -47,17 +47,25 @@ class Supplier {
     }
 
     delivery() {
-        setInterval( function (){
+        // setInterval( function (){
             let arrayLength = getRandomIntInclusive(3,6);
             const suppliesArray = []
             suppliesArray.length = arrayLength
             console.log(suppliesArray);
             let newDelivery = new Date().getTime();
-            let lastDeliveryDifference = newDelivery - supplier.lastDeliveryDateTime;
+            let lastDeliveryDifference = newDelivery - Supplier.lastDeliveryDateTime;
             this.lastDeliveryDateTime = newDelivery;
             console.log("difference: " + lastDeliveryDifference);
-        },this.frequencyInSeconds*1000);
+            return suppliesArray
+        // },this.frequencyInSeconds*1000);
     }
+}
+
+class stringsSupplier extends Supplier {
+}
+
+class neckSupplier extends Supplier {
+
 }
 class Storage {
 
@@ -65,9 +73,11 @@ class Storage {
 
 class Factory {
     constructor() {
-        this.neckSupplier = new Supplier(3);
-        this.stringsSupplier = new Supplier(4);
+        this.neckSupplier = new neckSupplier(3);
+        this.stringsSupplier = new stringsSupplier(4);
         this.storage = new Storage;
+        this.neckArray = [];
+        this.stringsArray = [];
     }
 
     produceBody(){
@@ -75,9 +85,15 @@ class Factory {
     }
 
     runProductionLine () {
-        setInterval({
+        // setInterval({
+        this.neckArray.push(this.neckSupplier.delivery())
+        console.log(this.neckArray)
+        this.stringsArray.push(this.stringsSupplier.delivery())
+        console.log(this.stringsArray)
 
-        }, 2000);
+
+
+        // }, 2000);
     }
 }
 
@@ -100,6 +116,10 @@ class Factory {
 // console.log(supplier);
 // supplier.delivery();
 // supplier.delivery();
+
+factory = new Factory()
+factory.runProductionLine()
+
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
