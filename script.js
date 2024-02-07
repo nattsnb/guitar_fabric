@@ -41,21 +41,23 @@ class Guitar {
 }
 
 class Supplier {
-    constructor(frequencyInSeconds) {
+    constructor(frequencyInSeconds,supply) {
         this.lastDeliveryDateTime = new Date().getTime();
         this.frequencyInSeconds = frequencyInSeconds;
+        this.supply = supply
+
     }
 
     delivery() {
         // setInterval( function (){
             let arrayLength = getRandomIntInclusive(3,6);
-            const suppliesArray = []
+            let suppliesArray = []
             suppliesArray.length = arrayLength
-            console.log(suppliesArray);
+            suppliesArray.fill(this.supply)
             let newDelivery = new Date().getTime();
             let lastDeliveryDifference = newDelivery - Supplier.lastDeliveryDateTime;
             this.lastDeliveryDateTime = newDelivery;
-            console.log("difference: " + lastDeliveryDifference);
+            // console.log("difference: " + lastDeliveryDifference);
             return suppliesArray
         // },this.frequencyInSeconds*1000);
     }
@@ -73,8 +75,8 @@ class Storage {
 
 class Factory {
     constructor() {
-        this.neckSupplier = new neckSupplier(3);
-        this.stringsSupplier = new stringsSupplier(4);
+        this.neckSupplier = new neckSupplier(3, "neck");
+        this.stringsSupplier = new stringsSupplier(4, "strings");
         this.storage = new Storage;
         this.neckArray = [];
         this.stringsArray = [];
@@ -85,15 +87,15 @@ class Factory {
     }
 
     runProductionLine () {
-        // setInterval({
-        this.neckArray.push(this.neckSupplier.delivery())
-        console.log(this.neckArray)
-        this.stringsArray.push(this.stringsSupplier.delivery())
-        console.log(this.stringsArray)
-
-
-
+        // setInterval(function() {
+            console.log(this.neckSupplier.delivery())
+            this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery())
+            console.log(this.neckArray)
+            console.log(this.stringsSupplier.delivery())
+            this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery())
+            console.log(this.stringsArray)
         // }, 2000);
+
     }
 }
 
