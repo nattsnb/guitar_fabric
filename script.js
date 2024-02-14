@@ -92,6 +92,11 @@ class Factory {
             console.log(this.neckArray);
             this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
             console.log(this.stringsArray);
+            const neck = new Neck;
+            this.neckArray.slice(-1)
+
+            const newGuitar = new Guitar(neck,strings,body)
+
         }, 2000);
     }
 }
