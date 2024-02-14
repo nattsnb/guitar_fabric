@@ -88,14 +88,25 @@ class Factory {
 
     runProductionLine () {
         setInterval(() => {
-            this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
-            console.log(this.neckArray);
-            this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
-            console.log(this.stringsArray);
-            const neck = new Neck;
-            this.neckArray.slice(-1)
+            if (this.neckArray.length === 0) {
+                this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
+                console.log("neck delivery");
+                console.log(this.neckArray.length);
+            }
+            if (this.stringsArray.length === 0) {
+                this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
+                console.log("strings delivery");
+                console.log(this.stringsArray.length);
+            } else {
+                const neck = new Neck;
+                this.neckArray.splice(0,1);
+                const strings = new Strings;
+                this.stringsArray.splice(0,1);
+                const body = new Body;
+                const newGuitar = new Guitar(neck,strings,body)
+                console.log("guitar produced")
+            }
 
-            const newGuitar = new Guitar(neck,strings,body)
 
         }, 2000);
     }
