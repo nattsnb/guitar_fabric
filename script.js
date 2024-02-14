@@ -31,10 +31,10 @@ class Guitar {
             this.isTuned === true &&
             this.isFaulty === false
         ) {
-            console.log("guitar is playing just fine!")
+            console.log("guitar is playing just fine!");
             return true;
         } else {
-            console.log("The guitar is not playable!")
+            console.log("The guitar is not playable!");
             return false;
         }
     }
@@ -44,22 +44,22 @@ class Supplier {
     constructor(frequencyInSeconds,supply) {
         this.lastDeliveryDateTime = new Date().getTime();
         this.frequencyInSeconds = frequencyInSeconds;
-        this.supply = supply
+        this.supply = supply;
 
     }
 
     delivery() {
-        // setInterval( function (){
-            let arrayLength = getRandomIntInclusive(3,6);
-            let suppliesArray = []
-            suppliesArray.length = arrayLength
-            suppliesArray.fill(this.supply)
-            let newDelivery = new Date().getTime();
-            let lastDeliveryDifference = newDelivery - Supplier.lastDeliveryDateTime;
-            this.lastDeliveryDateTime = newDelivery;
-            // console.log("difference: " + lastDeliveryDifference);
-            return suppliesArray
-        // },this.frequencyInSeconds*1000);
+        const newDeliveryDateTime = new Date().getTime();
+        const deliveryTimeDifference = newDeliveryDateTime - this.lastDeliveryDateTime;
+        if (deliveryTimeDifference > (this.frequencyInSeconds*1000)){
+            const arrayLength = getRandomIntInclusive(3,6);
+            let suppliesArray = [];
+            suppliesArray.length = arrayLength;
+            suppliesArray.fill(this.supply);
+            this.lastDeliveryDateTime = newDeliveryDateTime;
+            return suppliesArray;
+        }
+        return null
     }
 }
 
@@ -83,19 +83,16 @@ class Factory {
     }
 
     produceBody(){
-        return new Body
+        return new Body;
     }
 
     runProductionLine () {
-        // setInterval(function() {
-            console.log(this.neckSupplier.delivery())
-            this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery())
-            console.log(this.neckArray)
-            console.log(this.stringsSupplier.delivery())
-            this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery())
-            console.log(this.stringsArray)
-        // }, 2000);
-
+        setInterval(() => {
+            this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
+            console.log(this.neckArray);
+            this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
+            console.log(this.stringsArray);
+        }, 2000);
     }
 }
 
