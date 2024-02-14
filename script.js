@@ -70,7 +70,17 @@ class neckSupplier extends Supplier {
 
 }
 class Storage {
+    constructor() {
+        this.instrumentsArray = [];
+    }
 
+    storeInstrument(instrument) {
+        if (instrument === true) {
+            this.instrumentsArray.length = this.instrumentsArray.length + 1
+        }
+        console.log("Storage:")
+        console.log(this.instrumentsArray.length)
+    }
 }
 
 class Factory {
@@ -90,21 +100,23 @@ class Factory {
         setInterval(() => {
             if (this.neckArray.length === 0) {
                 this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
-                console.log("neck delivery");
-                console.log(this.neckArray.length);
+                // console.log("neck delivery");
+                // console.log(this.neckArray.length);
             }
             if (this.stringsArray.length === 0) {
                 this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
-                console.log("strings delivery");
-                console.log(this.stringsArray.length);
+                // console.log("strings delivery");
+                // console.log(this.stringsArray.length);
             } else {
                 const neck = new Neck;
                 this.neckArray.splice(0,1);
                 const strings = new Strings;
                 this.stringsArray.splice(0,1);
-                const body = new Body;
+                const body = this.produceBody();
                 const newGuitar = new Guitar(neck,strings,body)
-                console.log("guitar produced")
+                console.log("Guitar produced")
+                newGuitar.tune();
+                this.storage.storeInstrument(newGuitar.isPlayable());
             }
 
 
