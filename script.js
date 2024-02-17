@@ -31,61 +31,102 @@ class Guitar {
             this.isTuned === true &&
             this.isFaulty === false
         ) {
-            console.log("guitar is playing just fine!")
+            console.log("guitar is playing just fine!");
             return true;
         } else {
-            console.log("The guitar is not playable!")
+            console.log("The guitar is not playable!");
             return false;
         }
     }
 }
 
 class Supplier {
-    constructor() {
+    constructor(frequencyInSeconds,supply) {
         this.lastDeliveryDateTime = new Date().getTime();
-        this.frequencyInSeconds = 2;
+        this.frequencyInSeconds = frequencyInSeconds;
+        this.supply = supply;
+
     }
 
     delivery() {
-        setTimeout( function (){
-            let arrayLength = getRandomIntInclusive(3,6);
-            const suppliesArray = []
-            suppliesArray.length = arrayLength
-            let iteration = 0;
-            while(iteration < arrayLength) {
-                const availableSupplies = ["neck", "strings"]
-                const randomElement = availableSupplies[Math.floor(Math.random() * availableSupplies.length)];
-                const supply = suppliesArray.splice(iteration, 1, randomElement);
-                iteration++;
-            }
-            console.log(suppliesArray);
-            let newDelivery = new Date().getTime();
-            let lastDeliveryDifference = newDelivery - supplier.lastDeliveryDateTime;
-            this.lastDeliveryDateTime = newDelivery;
-            console.log("difference: " + lastDeliveryDifference);
-        },this.frequencyInSeconds*1000);
+        const newDeliveryDateTime = new Date().getTime();
+        const deliveryTimeDifference = newDeliveryDateTime - this.lastDeliveryDateTime;
+        if (deliveryTimeDifference > (this.frequencyInSeconds*1000)){
+            const arrayLength = getRandomIntInclusive(3,6);
+            let suppliesArray = [];
+            suppliesArray.length = arrayLength;
+            suppliesArray.fill(this.supply);
+            this.lastDeliveryDateTime = newDeliveryDateTime;
+            return suppliesArray;
+        }
+        return null
     }
 }
 
-const neck = new Neck();
+class stringsSupplier extends Supplier {
+}
 
-const strings = new Strings();
+class neckSupplier extends Supplier {
 
-const body = new Body();
+}
+class Storage {
+    constructor() {
+        this.instrumentsArray = [];
+    }
 
-const guitar = new Guitar(
-    neck, strings, body
-)
+    storeInstrument(instrument) {
+        if (instrument === true) {
+            this.instrumentsArray.length = this.instrumentsArray.length + 1
+        }
+        console.log("Storage:")
+        console.log(this.instrumentsArray.length)
+    }
+}
 
-const supplier = new(Supplier);
+class Factory {
+    constructor() {
+        this.neckSupplier = new neckSupplier(3, "neck");
+        this.stringsSupplier = new stringsSupplier(4, "strings");
+        this.storage = new Storage;
+        this.neckArray = [];
+        this.stringsArray = [];
+    }
 
-console.log(guitar);
-guitar.tune();
-console.log(guitar);
-console.log(guitar.isPlayable());
-console.log(supplier);
-supplier.delivery();
-supplier.delivery();
+    produceBody(){
+        return new Body;
+    }
+
+    runProductionLine () {
+        setInterval(() => {
+            if (this.neckArray.length === 0) {
+                this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
+                console.log("neck delivery");
+                console.log(this.neckArray.length);
+            }
+            if (this.stringsArray.length === 0) {
+                this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
+                console.log("strings delivery");
+                console.log(this.stringsArray.length);
+            } else {
+                const neck = new Neck;
+                this.neckArray.splice(0,1);
+                const strings = new Strings;
+                this.stringsArray.splice(0,1);
+                const body = this.produceBody();
+                const newGuitar = new Guitar(neck,strings,body)
+                console.warn("Guitar produced")
+                newGuitar.tune();
+                this.storage.storeInstrument(newGuitar.isPlayable());
+            }
+
+
+        }, 2000);
+    }
+}
+
+factory = new Factory()
+factory.runProductionLine()
+
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
