@@ -100,13 +100,13 @@ class Factory {
         setInterval(() => {
             if (this.neckArray.length === 0) {
                 this.neckArray.push.apply(this.neckArray, this.neckSupplier.delivery());
-                // console.log("neck delivery");
-                // console.log(this.neckArray.length);
+                console.log("neck delivery");
+                console.log(this.neckArray.length);
             }
             if (this.stringsArray.length === 0) {
                 this.stringsArray.push.apply(this.stringsArray, this.stringsSupplier.delivery());
-                // console.log("strings delivery");
-                // console.log(this.stringsArray.length);
+                console.log("strings delivery");
+                console.log(this.stringsArray.length);
             } else {
                 const neck = new Neck;
                 this.neckArray.splice(0,1);
@@ -114,7 +114,7 @@ class Factory {
                 this.stringsArray.splice(0,1);
                 const body = this.produceBody();
                 const newGuitar = new Guitar(neck,strings,body)
-                console.log("Guitar produced")
+                console.warn("Guitar produced")
                 newGuitar.tune();
                 this.storage.storeInstrument(newGuitar.isPlayable());
             }
@@ -123,26 +123,6 @@ class Factory {
         }, 2000);
     }
 }
-
-// const neck = new Neck();
-//
-// const strings = new Strings();
-//
-// const body = new Body();
-//
-// const guitar = new Guitar(
-//     neck, strings, body
-// )
-//
-// const supplier = new Supplier(2);
-//
-// console.log(guitar);
-// guitar.tune();
-// console.log(guitar);
-// console.log(guitar.isPlayable());
-// console.log(supplier);
-// supplier.delivery();
-// supplier.delivery();
 
 factory = new Factory()
 factory.runProductionLine()
